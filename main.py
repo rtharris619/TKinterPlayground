@@ -50,6 +50,66 @@ def add_frame_with_reliefs():
         label.pack()
 
 
-add_frame_with_reliefs()
+def pack_example():
+    frame1 = tk.Frame(master=window, width=100, height=100, bg="red")
+    frame2 = tk.Frame(master=window, width=50, height=50, bg="yellow")
+    frame3 = tk.Frame(master=window, width=25, height=25, bg="blue")
+
+    frame1.pack()
+    frame2.pack()
+    frame3.pack()
+
+
+def pack_with_fill():
+    frame1 = tk.Frame(master=window, height=100, bg="red")
+    frame2 = tk.Frame(master=window, height=50, bg="yellow")
+    frame3 = tk.Frame(master=window, height=25, bg="blue")
+
+    frame1.pack(fill=tk.X)
+    frame2.pack(fill=tk.X)
+    frame3.pack(fill=tk.X)
+
+
+def pack_with_side():
+    frame1 = tk.Frame(master=window, width=200, height=100, bg="red")
+    frame2 = tk.Frame(master=window, width=100, height=50, bg="yellow")
+    frame3 = tk.Frame(master=window, width=50, height=25, bg="blue")
+
+    frame1.pack(fill=tk.Y, side=tk.LEFT)
+    frame2.pack(fill=tk.Y, side=tk.LEFT)
+    frame3.pack(fill=tk.Y, side=tk.LEFT)
+
+
+def pack_with_expand():
+    frame1 = tk.Frame(master=window, width=200, height=100, bg="red")
+    frame2 = tk.Frame(master=window, width=100, bg="yellow")
+    frame3 = tk.Frame(master=window, width=50, bg="blue")
+
+    frame1.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
+    frame2.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
+    frame3.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
+
+
+def place_example():
+    frame = tk.Frame(master=window, width=150, height=150)
+    frame.pack()
+
+    label1 = tk.Label(master=frame, text="I'm at (0, 0)", bg="red")
+    label1.place(x=0, y=0)
+
+    label2 = tk.Label(master=frame, text="I'm at (75, 75)", bg="yellow")
+    label2.place(x=75, y=75)
+
+
+def grid_example():
+    for i in range(3):
+        for j in range(3):
+            frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth=1)
+            frame.grid(row=i, column=j)
+            label = tk.Label(master=frame, text=f"Row {i}\nColumn {j}")
+            label.pack()
+
+
+grid_example()
 
 window.mainloop()
