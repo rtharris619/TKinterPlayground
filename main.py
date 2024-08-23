@@ -1,6 +1,26 @@
 import tkinter as tk
+from enum import Enum
 
 window = tk.Tk()
+
+
+class StickyGridPosition(Enum):
+    North = "n"
+    East = "e"
+    South = "s"
+    West = "w"
+
+    @classmethod
+    def horizontal_fill(cls):
+        return cls.East.value + cls.West.value
+
+    @classmethod
+    def vertical_fill(cls):
+        return cls.North.value + cls.South.value
+
+    @classmethod
+    def cell_fill(cls):
+        return cls.North.value + cls.South.value + cls.East.value + cls.West.value
 
 
 def add_label():
@@ -103,13 +123,54 @@ def place_example():
 
 def grid_example():
     for i in range(3):
+
+        window.columnconfigure(i, weight=1, minsize=75)
+        window.rowconfigure(i, weight=1, minsize=50)
+
         for j in range(3):
             frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth=1)
-            frame.grid(row=i, column=j)
+            frame.grid(row=i, column=j, padx=5, pady=5)
             label = tk.Label(master=frame, text=f"Row {i}\nColumn {j}")
-            label.pack()
+            label.pack(padx=5, pady=5)
 
 
-grid_example()
+def grid_example_2():
+    window.columnconfigure(0, weight=1, minsize=250)
+    window.rowconfigure([0, 1], weight=1, minsize=100)
+
+    label1 = tk.Label(text="A")
+    label1.grid(row=0, column=0)
+
+    label2 = tk.Label(text="B")
+    label2.grid(row=1, column=0)
+
+
+def grid_example_3():
+    window.columnconfigure(0, weight=1, minsize=250)
+    window.rowconfigure([0, 1], weight=1, minsize=100)
+
+    label1 = tk.Label(text="A")
+    label1.grid(row=0, column=0, sticky=StickyGridPosition.North.value + StickyGridPosition.East.value)
+
+    label2 = tk.Label(text="B")
+    label2.grid(row=1, column=0, sticky=StickyGridPosition.South.value + StickyGridPosition.West.value)
+
+
+def grid_example_4():
+    window.rowconfigure(0, minsize=50)
+    window.columnconfigure([0, 1, 2, 3], minsize=50)
+
+    label1 = tk.Label(text="1", bg="black", fg="white")
+    label2 = tk.Label(text="2", bg="black", fg="white")
+    label3 = tk.Label(text="3", bg="black", fg="white")
+    label4 = tk.Label(text="4", bg="black", fg="white")
+
+    label1.grid(row=0, column=0)
+    label2.grid(row=0, column=1, sticky=StickyGridPosition.horizontal_fill())
+    label3.grid(row=0, column=2, sticky=StickyGridPosition.vertical_fill())
+    label4.grid(row=0, column=3, sticky=StickyGridPosition.cell_fill())
+
+
+grid_example_4()
 
 window.mainloop()
